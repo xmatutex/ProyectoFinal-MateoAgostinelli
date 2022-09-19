@@ -22,27 +22,39 @@ def contacto (request):
     return render (request, "Appinicio/contacto.html")
 
 
+
+
 #--Formulario--#
 
-def formulario (request):
+def formulario_usuario(request):
 
-    if request.method == "POST":
+    if request.method=="POST":
 
-        formulario_1=Formulario1(request.POST)
+        formulario_1=Formulario_usuario(request.POST)
         
-        usuario=request.POST.get("usuario")
-        
-        if formulario_1.is_valid:
+        if formulario_1.is_valid():
             
-            informacion= formulario_1.cleaned_data
+            info=formulario_1.cleaned_data
+    
+            nombre=info.get("nombre")
+            apellido=info.get("apellido")
+            email=info.get("email")
+            contraseña=info.get("contraseña")
             
-            usuario= Usuario(usuario=informacion[""])
-            
+            usuario=Usuario(nombre=nombre, apellido=apellido, email=email, contraseña=contraseña)
             usuario.save()
             
-            return render (request, "Appinicio/inicio.html")
+            return render (request, "Appinicio/usuario_creado.html", {"mensaje": "usuario creado"})
+        else:
+            return render (request, "Appinicio/inicio.html", {"mensaje": "Error creando el usuario"})
+    
+    else:
+        formulario_1=Formulario_usuario()
+        return render(request, "Appinicio/formulario.html", {"formulario":formulario_1})
         
     return render (request, "Appinicio/formulario.html")
+
+
 
 def usuario_creado (request):
 
