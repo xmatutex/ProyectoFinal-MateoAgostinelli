@@ -1,8 +1,9 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 
-class Formulario_usuario(forms.Form):
+class UserRegisterForm(UserCreationForm):
 
-    nombre=forms.CharField(max_length=50)
-    apellido=forms.CharField(max_length=50)
-    email=forms.EmailField()
-    contraseña=forms.CharField()
+    username = forms.CharField(max_length=50)
+    email = forms.EmailField(max_length=50)
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
