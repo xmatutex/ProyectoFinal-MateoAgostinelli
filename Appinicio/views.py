@@ -38,17 +38,6 @@ def inicio (request):
     return render (request, 'Appinicio/inicio.html', {'avatar':avatar, 'posts': posts})
 
 
-
-
-def acercanuestro (request):
-
-    return render (request,"Appinicio/acercanuestro.html")
-
-def contacto (request):
-
-    return render (request, "Appinicio/contacto.html")
-
-
 def perfil_usuario (request):
 
     return render (request, "Appinicio/perfil_usuario.html")
@@ -102,11 +91,6 @@ def registro(request):
 def perfil_editar(request):
 
     usuario = request.user
-  #try:
-      #avatar = Avatar.objects.get(user=request.user.id)
-      #avatar = avatar.avatar.url
-  #except:
-      #avatar = ''
  
     if request.method == 'POST':
         form = UserEditForm(request.POST, instance=usuario) 
@@ -182,6 +166,10 @@ def posts(request):
 class Post_detalles(DetailView):
     model = Post
     template_name = 'Appinicio/post_detalles.html'
+    
+class PostDelete(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = '/posts/'
 
 #------------nueva funcion para mi form que permite agregar Posts-------------------
 
@@ -212,10 +200,10 @@ def post_editar(request, post_id):
         form = PostForm(request.POST, request.FILES ,instance=post)
         if form.is_valid():
             form.save()
-            return redirect('Appinicio/posts.html')
+            return render(request, 'Appinicio/posts_crear.html', {'mensaje':"El post se modifico con exito"})
     else:
         form = PostForm(instance=post)
-    return render(request, 'Appinicio/posts_editar.html',{'form':form, 'title':post.title})
+    return render(request, 'Appinicio/post_editar.html',{'form':form, 'title':post.title})
 
 
 #--------------------------Messages (Inbox and send new msg)--------------------------------------------

@@ -91,26 +91,27 @@
     </div>
     <!-- Page Header End -->
 
+    {% block posts %}
 
-{% block posts %}
+    <!-- Title and subtitle -->
+    <div class="w3-panel w3-padding-16 w3-center w3-topbar w3-bottombar w3-border-dark-grey w3-round">
+        <h1>Posts</h1>
+        <h3 class="w3-opacity" style="text-shadow:1px 1px 0 #444">Lista de todos los Posts:</h3>
+    </div>
 
-<!-- Title and subtitle -->
-<div class="w3-panel w3-padding-16 w3-center w3-topbar w3-bottombar w3-border-dark-grey w3-round">
-    <h1>Posts</h1>
-    <h3 class="w3-opacity" style="text-shadow:1px 1px 0 #444">Lista de todos los Posts:</h3>
-</div>
 
-<!-- Buscar Post -->
-<div class="w3-panel">
-    <h3>You can search for a title:</h3>
 
-    <form action="" method="GET">
-        <input type="text" name="title" id="title">
-        <input button type="submit" class="w3-button w3-round-large w3-button w3-indigo" value="Search">
-    </form>
-</div>
+    <!-- Buscar Post -->
+    <div class="w3-panel">
+        <h3>Busca por titulo:</h3>
 
-{% if posts %}
+        <form action="" method="GET">
+            <input type="text" name="title" id="title">
+            <input button type="submit" class="w3-button w3-round-large w3-button w3-brown" value="Buscar">
+        </form>
+    </div>
+
+
     
     <!-- Tabla -->
     
@@ -137,8 +138,8 @@
                         <td> 
                             {% if request.user == post.author %}
                             <!-- Botones de tabla -->
-                            <a href="" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-trash"></i> Delete Post</a>
-                            <a href="" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-edit"></i> Edit Post</a>
+                            <a href="{% url 'PostDelete' post.id %}" class="w3-button w3-round w3-brown w3-small"><i class="fa fa-trash"></i> Borrar Post</a>
+                            <a href="{% url 'post_editar' post.id %}" class="w3-button w3-round w3-brown w3-small"><i class="fa fa-edit"></i> Editar Post</a>
                             {% endif %}
                         </td>
                         
@@ -150,20 +151,17 @@
         </table>
     </div>
 
-{% block boton_crear %}    
+    {% block boton_crear %}    
+        
+    <!-- Botones -->
+    <div class="w3-bar w3-padding-32">
+        <a button class="w3-button w3-round-large w3-button w3-large w3-brown" href="{% url 'posts_crear' %}"><i class="fa fa-edit"></i> Crear nuevo post</a>
+        
+    </div>
     
-
-
-{% endblock %} 
-{% endif %}
-
-<!-- Botones -->
-<div class="w3-bar w3-padding-32">
-    <a button class="w3-button w3-round-large w3-button w3-large w3-indigo" href="{% url 'posts_crear' %}"><i class="fa fa-edit"></i> Crear nuevo post</a>
+    {% endblock %}     
     
-</div>
-
-{% endblock posts %}
+    {% endblock posts %}
 
 
 

@@ -21,6 +21,7 @@
     <!-- Libraries Stylesheet -->
     <link href="{% static 'Appinicio\lib\owlcarousel\owl.carousel.min.js' %}" rel="stylesheet">
     <link href="{% static 'Appinicio\lib\tempusdominus\css\tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'Appinicio\css\style.min.css' %}" rel="stylesheet">
@@ -102,6 +103,46 @@
         </div>
     </div>
     <!-- Carousel End -->
+
+    {% block content %}
+
+    <div class="w3-container w3-padding-16 w3-center w3-topbar w3-bottombar w3-border-dark-grey w3-round">
+        <h1>inicio</h1>
+        <h3 class="w3-opacity" style="text-shadow:1px 1px 0 #444"></h3>
+    </div>
+
+    {% if user.is_authenticated %}
+        <div class="w3-container w3-light-grey w3-leftbar w3-rightbar w3-center">
+            <h5 style="color:navy">Bienvenido, <b>{{user.username}}</b>.</h5>
+        </div>   
+    {% endif %}
+
+    <!-- Posts display -->
+    {% if posts %}
+        <div class="w3-panel">
+            <h1>Ultimos Posts</h1>
+            {% for post in posts %}
+                <div class="w3-card-4" style="width:70%">
+                    <header class="w3-container w3-brown"><h3>{{ post.title }}</h3></header>
+                    <div class="w3-container">
+                        <p>{{ post.author }} | {{ post.date }}</p>
+                        <hr>
+                        {% if post.image %}
+                            <img src="{{post.image.url}}" class="w3-left w3-round w3-margin-right" style="width:200px" alt="title">
+                        {% endif %}
+                        <p>{{ post.subtitle }}</p><br>
+                    </div>
+                    <a button class="w3-button w3-block w3-sand" href="{% url 'Post_detalles' post.id %}">+ Info</a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="w3-panel w3-white">
+            <a href="{% url 'posts' %}" class="w3-button w3-brown"><i class="fa fa-list-ul w3-margin-right"></i>Ver Todos</a>
+        </div>
+    {% endif %}
+
+
+    {% endblock %}
 
 
     <!-- Footer Start -->

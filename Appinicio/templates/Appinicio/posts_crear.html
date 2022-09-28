@@ -21,6 +21,7 @@
     <!-- Libraries Stylesheet -->
     <link href="{% static 'Appinicio\lib\owlcarousel\owl.carousel.min.js' %}" rel="stylesheet">
     <link href="{% static 'Appinicio\lib\tempusdominus\css\tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'Appinicio\css\style.min.css' %}" rel="stylesheet">
@@ -80,38 +81,37 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 position-relative overlay-bottom">
         <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
-            <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">About Us</h1>
+            <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Nuevo Post</h1>
             <div class="d-inline-flex mb-lg-5">
-                <p class="m-0 text-white"><a class="text-white" href="">Home</a></p>
+                <p class="m-0 text-white"><a class="text-white" href="">Posts</a></p>
                 <p class="m-0 text-white px-2">/</p>
-                <p class="m-0 text-white">About Us</p>
+                <p class="m-0 text-white">Nuevo Post</p>
             </div>
         </div>
     </div>
     <!-- Page Header End -->
 
-    {% for p in posts %}
-
-        <li>{{ p }}</li>
-
-    {% endfor%}
 
     {% block formulario %}
     <h1> {{ mensaje }} </h1>
 
-    <form action="" method="post">{% csrf_token %}
+    <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
         
-        <table>
+        <table class="w3-table w3-topbar w3-bottombar w3-border-dark-grey w3-round">
 
             {{ form.as_table }}
 
         </table>
 
-        <button type="submit"> Crear Post</button>
+        <div class="w3-bar w3-padding-32">
+            <a button type="button" class="w3-button w3-round-large w3-button w3-large w3-brown" href=" {% url 'posts' %} ">Volver</button></a>
+            <input button type="submit" class="w3-button w3-round-large w3-button w3-large w3-brown" value="Crear">
+            
+        </div>
 
     </form>
-
     
+    {{ mensaje }}
 
     {% endblock %}
 
