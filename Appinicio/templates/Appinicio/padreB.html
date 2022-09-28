@@ -21,6 +21,7 @@
     <!-- Libraries Stylesheet -->
     <link href="{% static 'Appinicio\lib\owlcarousel\owl.carousel.min.js' %}" rel="stylesheet">
     <link href="{% static 'Appinicio\lib\tempusdominus\css\tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'Appinicio\css\style.min.css' %}" rel="stylesheet">
@@ -28,6 +29,29 @@
 
 <body>
     <!-- Navbar Start -->
+
+    {% if user.is_authenticated %}
+
+    <div class="container-fluid p-0 nav-bar">
+        <nav class="navbar navbar-expand-lg bg-none navbar-dark py-3">
+            <a href="{% url 'inicio' %}" class="navbar-brand px-lg-4 m-0">
+                <h1 class="m-0 display-4 text-uppercase text-white">99 Fuegos</h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav ml-auto p-4">
+                    <a href="{% url 'inicio' %}" class="nav-item nav-link active">Inicio</a>
+                    <a href="{% url 'posts' %}" class="nav-item nav-link">Posts</a>
+                    <a href="{% url 'perfil_usuario' %}" class="nav-item nav-link">Perfil</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    {% else %}
+
     <div class="container-fluid p-0 nav-bar">
         <nav class="navbar navbar-expand-lg bg-none navbar-dark py-3">
             <a href="{% url 'inicio' %}" class="navbar-brand px-lg-4 m-0">
@@ -40,6 +64,7 @@
                 <div class="navbar-nav ml-auto p-4">
                     <a href="{% url 'inicio' %}" class="nav-item nav-link active">Inicio</a>
                     <a href="{% url 'acercanuestro' %}" class="nav-item nav-link">Acerca de nosotros</a>
+
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu text-capitalize">
@@ -49,12 +74,15 @@
                     </div>
                     <a href="{% url 'contacto' %}" class="nav-item nav-link">Contacto</a>
                     <a href="{% url 'registro' %}" class="nav-item nav-link">Registrate</a>
-                    <a href="{% url 'login' %}" class="nav-item nav-link">login</a>
+                    <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
                 </div>
             </div>
         </nav>
     </div>
-    <!-- Navbar End -->
+
+    {% endif %}
+
+    <!-- Navbar end -->
 
 
     <!-- Page Header Start -->
@@ -69,43 +97,6 @@
         </div>
     </div>
     <!-- Page Header End -->
-
-
-    <!-- About Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="section-title">
-                <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">About Us</h4>
-                <h1 class="display-4">Serving Since 1950</h1>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 py-0 py-lg-5">
-                    <h1 class="mb-3">Our Story</h1>
-                    <h5 class="mb-3">Eos kasd eos dolor vero vero, lorem stet diam rebum. Ipsum amet sed vero dolor sea</h5>
-                    <p>
-                        Almost a century ago, the Giache family arrived in Argentina from the Ancona region in Italy hoping to apply their experience in agriculture. They moved around the country until the mid-1940s, when Ramón the Giache’s son, started his wine production in Mendoza. Today, Alberto Giache, Ramon’s son, continues the tradition of love and dedication to his vineyards at Viñas del Aconcagua.
-                        At the beginning of the XX century, Don Quinto Agostinelli arrived in Buenos Aires also from Ancona, to work at the Hotel Alvear, an icon of Buenos Aires’ hotel and haute cuisine industry – circa 1940 -. His son Jorge was fundamental in the development of Argentinean haute cuisine market through selling gourmet products for decades. Currently, Javier, Don Quinto’s grandson, continues to defend the values of haute cuisine as part of a project that shows the results of the efforts of three generations of Italian immigrants.
-                        One of its leading products is 99 Fuegos Malbec, represented in the state of New York by Woodwine. This wine is a Malbec-Malbec blend from the same vineyard, in which 85% rested in steel tanks and 15% in American oak barrels for 6 months. The predominance of fruity notes and the complexity of the wood make this wine a unique and remarkable specimen, easily recognizable as a classic “Argentine Malbec.”
-                        99 Fuegos is a project by Javier Agostinelli and Federico Rozo, born in the Viñas del Aconcagua winery located 900 meters above sea level, the ancient epicenter of the Huarpe community, together with Alberto Giache, who expresses the talent of his work in these vines, the result being a careful wine, of small production and great quality.</p>
-                    <a href="" class="btn btn-secondary font-weight-bold py-2 px-4 mt-2">Learn More</a>
-                </div>
-                <div class="col-lg-4 py-5 py-lg-0" style="min-height: 500px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100" src="img/about.png" style="object-fit: cover;">
-                    </div>
-                </div>
-                <div class="col-lg-4 py-0 py-lg-5">
-                    <h1 class="mb-3">Our Vision</h1>
-                    <p>Invidunt lorem justo sanctus clita. Erat lorem labore ea, justo dolor lorem ipsum ut sed eos, ipsum et dolor kasd sit ea justo. Erat justo sed sed diam. Ea et erat ut sed diam sea ipsum est dolor</p>
-                    <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>Lorem ipsum dolor sit amet</h5>
-                    <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>Lorem ipsum dolor sit amet</h5>
-                    <h5 class="mb-3"><i class="fa fa-check text-primary mr-3"></i>Lorem ipsum dolor sit amet</h5>
-                    <a href="" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- About End -->
 
 
     <!-- Footer Start -->

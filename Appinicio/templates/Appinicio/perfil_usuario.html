@@ -22,6 +22,7 @@
     <!-- Libraries Stylesheet -->
     <link href="{% static 'Appinicio\lib\owlcarousel\owl.carousel.min.js' %}" rel="stylesheet">
     <link href="{% static 'Appinicio\lib\tempusdominus\css\tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'Appinicio\css\style.min.css' %}" rel="stylesheet">
@@ -29,10 +30,13 @@
 
 <body>
     <!-- Navbar Start -->
+
+    {% if user.is_authenticated %}
+
     <div class="container-fluid p-0 nav-bar">
         <nav class="navbar navbar-expand-lg bg-none navbar-dark py-3">
-            <a href="index.html" class="navbar-brand px-lg-4 m-0">
-                <h1 class="m-0 display-4 text-uppercase text-white">99Fuegos</h1>
+            <a href="{% url 'inicio' %}" class="navbar-brand px-lg-4 m-0">
+                <h1 class="m-0 display-4 text-uppercase text-white">99 Fuegos</h1>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -40,22 +44,37 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto p-4">
                     <a href="{% url 'inicio' %}" class="nav-item nav-link">Inicio</a>
-                    <a href="{% url 'acercanuestro' %}" class="nav-item nav-link">Acerca de nosotros</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu text-capitalize">
-                            <a href="reservation.html" class="dropdown-item">Reservation</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        </div>
-                    </div>
-                    <a href="{% url 'contacto' %}" class="nav-item nav-link">Contacto</a>
-                    <a href="{% url 'registro' %}" class="nav-item nav-link">Registrate</a>
-                    <a href="{% url 'login' %}" class="nav-item nav-link active">Login</a>
+                    <a href="{% url 'posts' %}" class="nav-item nav-link">Posts</a>
+                    <a href="{% url 'perfil_usuario' %}" class="nav-item nav-link active">Perfil</a>
                 </div>
             </div>
         </nav>
     </div>
-    <!-- Navbar End -->
+
+    {% else %}
+
+    <div class="container-fluid p-0 nav-bar">
+        <nav class="navbar navbar-expand-lg bg-none navbar-dark py-3">
+            <a href="{% url 'inicio' %}" class="navbar-brand px-lg-4 m-0">
+                <h1 class="m-0 display-4 text-uppercase text-white">99 Fuegos</h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav ml-auto p-4">
+                    <a href="{% url 'inicio' %}" class="nav-item nav-link active">Inicio</a>
+                    <a href="{% url 'posts' %}" class="nav-item nav-link">Posts</a>
+                    <a href="{% url 'registro' %}" class="nav-item nav-link">Registrate</a>
+                    <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    {% endif %}
+
+    <!-- Navbar end -->
 
 
     <!-- Page Header Start -->
@@ -70,24 +89,62 @@
         </div>
     </div>
 
-    <!-- Empiezxa Formulario  -->
-    {% block formulario %}
-    <h1>{{ mensaje }} </h1>
+    <!-- Perfil Usuario -->
 
-    <form action="{% url 'login' %}" method="post">{% csrf_token %}
-        
-        <table>
+    {% block content %}
 
-            {{ form.as_p }}
+    {{ mensaje }}
 
-        </table>
 
-        <input type="submit" value="Cerrar sesion">
+    <div class="w3-container w3-card-4 w3-center w3-padding-32">
+        <h5><b>{{user.username}}</b></h5>
+    </div>
+    
+    {% block messages %}
+    
+        {% if avatar %}
+        <div class="w3-card-4 w3-center w3-white w3-display-container">
+            <img class="w3-circle" height="400px" src="{{avatar}}" alt="avatar">
+            {% if user.is_superuser %}   <!-- solo el Admin puede ver la opción de cambiar foto de perfil -->
+                <div class="w3-display-bottommiddle w3-large w3-black"><a class="w3-button w3-black w3-border" title="Change profile picture" href="{% url 'users:editAvatar' %}"><i class="fa fa-file-image-o"></i></a></div>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="w3-card-4 w3-center w3-white w3-display-container">
+            <img src="{% static 'Appinicio\img\Profile-Pic-Icon-empty.png' %}" class="w3-circle" height="100px" alt="avatar">
+            {% if user.is_superuser %}   <!-- solo el Admin puede ver la opción de cambiar foto de perfil -->
+                <div class="w3-display-bottommiddle w3-large w3-black"><a class="w3-button w3-black w3-border" title="Add a profile picture" href=""><i class="fa fa-file-image-o"></i></a></div>
+            {% endif %}
+        </div>
+        {% endif %}    
 
-    </form>
+        <!-- datos del usuario -->
+        <div class="w3-card-4 w3-center">
+            <h4>
+                <ul>
+                    <ol>Username: {{ user.username }}</ol>
+                    <ol>Name: {{user.first_name}}</ol>
+                    <ol>Lastname: {{user.last_name}}</ol>
+                    <ol>Email: {{user.email}}</ol>
+                    <ol>Last access: {{user.last_login}}</ol>
+                    <ol>Joined: {{user.date_joined}}</ol>
+            </ul>
+            </h4>
+        </div>
+    <!-- Perfil Usuario -->
 
-    {% endblock %}    
-    <!-- Termina Formulario  -->
+    <!-- Botones -->
+        <a button type="button" class="w3-button w3-block w3-round-large w3-indigo" href=" {% url 'mensajes_inbox' %} "><i class="fa fa-envelope-o"></i> Inbox</button></a>
+
+        <div class="w3-bar w3-padding-32 w3-center">
+            <a button type="button" class="w3-button w3-round-large w3-button w3-large w3-indigo w3-right" href="{% url 'perfil_editar' %}">Editar Perfil</button></a>
+            <a button type="button" class="w3-button w3-round-large w3-button w3-large w3-indigo w3-left" href="{% url 'inicio' %} ">Inicio</button></a>
+            <a button type="button" class="w3-button w3-round-large w3-button w3-large w3-indigo w3-left" href="{% url 'logout' %}">Cerrar Sesion</button></a>
+        </div>
+
+    {% endblock messages %}
+
+    {% endblock %}
 
 
     <!-- Footer Start -->
