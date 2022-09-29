@@ -29,11 +29,6 @@ class UserEditForm(UserCreationForm):
         
     
 
-class AvatarForm(forms.ModelForm):
-
-    class Meta:
-        model = Avatar
-        fields = ['avatar']
         
 #-------------------Form post---------------------------------#      
 

@@ -15,6 +15,7 @@ urlpatterns = [
     
     path('perfil_usuario/', perfil_usuario, name='perfil_usuario'),
     path('perfil_editar/', perfil_editar, name='perfil_editar'),
+    path('about/', about, name='about'),
     
     path('posts/', posts, name='posts'),
     path('posts_crear/', posts_crear, name='posts_crear'),

@@ -42,6 +42,10 @@ def perfil_usuario (request):
 
     return render (request, "Appinicio/perfil_usuario.html")
 
+def about(request):
+    
+    return render(request, "Appinicio/about.html")
+
 #--Login--#
 
 def login_usuario (request):
@@ -107,48 +111,18 @@ def perfil_editar(request):
         else:
             return render(request, 'Appinicio/perfil_editar.html', {"form":form, "mensaje": "The user could not be updated. Please try again"})
     else: 
-        form= UserEditForm(initial={'email':usuario.email, 'first_name':usuario.first_name, 'last_name':usuario.last_name}) #Creo el formulario con los datos que voy a modificar
-    return render(request, 'Appinicio/perfil_editar.html', {"form":form, "usuario":usuario})  #Voy al html que me permite editar
+        form= UserEditForm(initial={'email':usuario.email, 'first_name':usuario.first_name, 'last_name':usuario.last_name,})
+    return render(request, 'Appinicio/perfil_editar.html', {"form":form, "usuario":usuario})
     
 #--Ver/Editar Usuario-#
 @login_required
 def profile(request, user_id):
     
     user = request.user
-     #buscamos si el usuario tiene avatar:
-    try:
-        avatar = Avatar.objects.get(user=request.user.id)
-        avatar = avatar.avatar.url
-    except:
-         avatar = ''
 
-    context = {'user': user, 'avatar': avatar, 'title': 'Profile'}
+    context = {'user': user, 'title': 'Profile'}
     return render(request, 'Appinicio/perfil_usuario.html', context)
 
-
-@user_passes_test(lambda u: u.is_superuser)   # solo los superusers pueden cambiar el avatar
-def editAvatar(request):
-    
-    user = request.user
-    # buscamos si el usuario tiene avatar:
-    try:
-        avatar = Avatar.objects.get(user=request.user.id)
-        avatar = avatar.avatar.url
-    except:
-        avatar = ''
-
-    if request.method == 'POST':
-        form_avatar= AvatarForm(request.POST, request.FILES, instance=user)
-        if form_avatar.is_valid():
-            u = User.objects.get(username=request.user)
-            new_avatar = Avatar(user=u, avatar=form_avatar.cleaned_data['avatar'])
-            new_avatar.save()
-            return redirect(reverse('users:Profile', args=[id]))
-        else:
-            return render(request, 'Users/edit_avatar.html', {"form_avatar":form_avatar, "mensaje": "The avatar could not be updated. Please try again"})
-    else:
-        form_avatar= AvatarForm()
-    return render (request, 'Users/edit_avatar.html', {"form_avatar":form_avatar, "avatar":avatar})
 
 
 #-------------------View Posts--------------------------------------------------

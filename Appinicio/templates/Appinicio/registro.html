@@ -45,6 +45,7 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto p-4">
                     <a href="{% url 'inicio' %}" class="nav-item nav-link ">Inicio</a>
+                    <a href="{% url 'about' %}" class="nav-item nav-link active">About</a>
                     <a href="{% url 'posts' %} " class="nav-item nav-link active">Posts</a>
                     <a href="{% url 'perfil_usuario' %}" class="nav-item nav-link">Perfil</a>
                 </div>
@@ -65,8 +66,9 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto p-4">
                     <a href="{% url 'inicio' %}" class="nav-item nav-link ">Inicio</a>
-                    <a href="{% url 'posts' %}" class="nav-item nav-link active">Posts</a>
-                    <a href="{% url 'registro' %}" class="nav-item nav-link">Registrate</a>
+                    <a href="{% url 'about' %}" class="nav-item nav-link ">About</a>
+                    <a href="{% url 'posts' %}" class="nav-item nav-link ">Posts</a>
+                    <a href="{% url 'registro' %}" class="nav-item nav-link active">Registrate</a>
                     <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
                 </div>
             </div>
@@ -97,7 +99,7 @@
     {% if user.is_authenticated %}
     <div class="w3-bar w3-padding-32">
 
-        <button class="w3-button w3-round-large w3-button w3-large w3-brown" href="{% url 'perfil_usuario' %}" ><i class="fa fa-edit"></i> Ir a Perfil</button>
+        <button  href="{% url 'perfil_usuario' %}" class="w3-button w3-round-large w3-button w3-large w3-brown" ><i class="fa fa-edit"></i> Ir a Perfil</button>
     </div>
     {% endif %}
 
